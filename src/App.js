@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Modal from "./components/Modal";
 import NewPost from "./components/NewPost";
 import Posts from "./components/Posts";
 
@@ -9,14 +10,24 @@ const initialPosts = [
 
 function App() {
   const [posts, setPosts] = useState(initialPosts);
+  const [modalIsVisible, setModalIsVisible] = useState(true);
 
   const addPostHandler = (newPost) => {
     setPosts((prevState) => [...prevState, newPost]);
   };
 
+  const hideModalHandler = () => {
+    setModalIsVisible(false);
+  };
+
   return (
     <main>
-      <NewPost onAdd={addPostHandler} />
+      {modalIsVisible && (
+        <Modal onClose={hideModalHandler}>
+          <NewPost onAddPost={addPostHandler} />
+        </Modal>
+      )}
+
       <Posts posts={posts} />
     </main>
   );

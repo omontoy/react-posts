@@ -2,20 +2,24 @@ import { useState } from "react";
 import classes from "./NewPost.module.css";
 
 const NewPost = (props) => {
-  const [body, setBody] = useState("");
-  const [author, setAuthor] = useState("");
+  const [enteredBody, setEnteredBody] = useState("");
+  const [enteredAuthor, setEnteredAuthor] = useState("");
 
   const bodyChangeHandler = (e) => {
-    setBody(e.target.value);
+    setEnteredBody(e.target.value);
   };
 
   const authorChangeHandler = (e) => {
-    setAuthor(e.target.value);
+    setEnteredAuthor(e.target.value);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.onAdd({ id: Math.random().toString(), author, body });
+    props.onAddPost({
+      id: Math.random().toString(),
+      enteredAuthor,
+      enteredBody,
+    });
   };
 
   return (
@@ -26,7 +30,7 @@ const NewPost = (props) => {
           type="text"
           name="body"
           id="body"
-          value={body}
+          value={enteredBody}
           onChange={bodyChangeHandler}
           rows={3}
           required
@@ -39,7 +43,7 @@ const NewPost = (props) => {
           type="text"
           name="author"
           id="author"
-          value={author}
+          value={enteredAuthor}
           onChange={authorChangeHandler}
           required
         />
