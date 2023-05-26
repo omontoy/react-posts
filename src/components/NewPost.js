@@ -1,12 +1,12 @@
 import { useState } from "react";
 import classes from "./NewPost.module.css";
 
-const NewPost = ({ onAddPost, onSubmittingPost }) => {
+const NewPost = ({ onAddPost, onCancel }) => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
-  const [enteredBody, setBody] = useState("");
+  const [enteredBody, setEnteredBody] = useState("");
 
   const bodyChangeHandler = (e) => {
-    setBody(e.target.value);
+    setEnteredBody(e.target.value);
   };
 
   const authorChangeHandler = (e) => {
@@ -15,12 +15,15 @@ const NewPost = ({ onAddPost, onSubmittingPost }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onAddPost({
+
+    const newPostData = {
       id: Math.random().toString(),
       author: enteredAuthor,
       body: enteredBody,
-    });
-    onSubmittingPost();
+    };
+
+    onAddPost(newPostData);
+    onCancel();
   };
 
   return (
@@ -50,8 +53,11 @@ const NewPost = ({ onAddPost, onSubmittingPost }) => {
         />
       </div>
 
-      <div>
-        <button className={classes.actions}>New Post</button>
+      <div className={classes.actions}>
+        <button type="button" onClick={onCancel}>
+          Cancel
+        </button>
+        <button>Submit</button>
       </div>
     </form>
   );
