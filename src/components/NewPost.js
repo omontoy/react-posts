@@ -1,7 +1,7 @@
 import { useState } from "react";
 import classes from "./NewPost.module.css";
 
-const NewPost = ({ onAddPost }) => {
+const NewPost = ({ onAddPost, onSubmittingPost }) => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
   const [enteredBody, setBody] = useState("");
 
@@ -20,6 +20,7 @@ const NewPost = ({ onAddPost }) => {
       author: enteredAuthor,
       body: enteredBody,
     });
+    onSubmittingPost();
   };
 
   return (
