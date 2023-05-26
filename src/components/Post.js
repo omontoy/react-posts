@@ -1,10 +1,10 @@
 import classes from "./Post.module.css";
 
-const Post = (props) => {
+const Post = ({ author, body }) => {
   return (
     <li className={classes.post}>
-      <h2 className={classes.author}>{props.author}</h2>
-      <p className={classes.text}>{props.body}</p>
+      <h2 className={classes.author}>{author}</h2>
+      <p className={classes.text}>{body}</p>
     </li>
   );
 };

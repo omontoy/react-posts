@@ -1,12 +1,12 @@
 import { useState } from "react";
 import classes from "./NewPost.module.css";
 
-const NewPost = (props) => {
-  const [enteredBody, setEnteredBody] = useState("");
+const NewPost = ({ onAddPost }) => {
   const [enteredAuthor, setEnteredAuthor] = useState("");
+  const [enteredBody, setBody] = useState("");
 
   const bodyChangeHandler = (e) => {
-    setEnteredBody(e.target.value);
+    setBody(e.target.value);
   };
 
   const authorChangeHandler = (e) => {
@@ -15,36 +15,36 @@ const NewPost = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    props.onAddPost({
+    onAddPost({
       id: Math.random().toString(),
-      enteredAuthor,
-      enteredBody,
+      author: enteredAuthor,
+      body: enteredBody,
     });
   };
 
   return (
     <form onSubmit={submitHandler} className={classes.form}>
       <div>
-        <label htmlFor="body">Text</label>
+        <label htmlFor="enteredAuthor">Your Name</label>
         <textarea
           type="text"
-          name="body"
-          id="body"
-          value={enteredBody}
-          onChange={bodyChangeHandler}
-          rows={3}
+          name="enteredAuthor"
+          id="enteredAuthor"
+          value={enteredAuthor}
+          onChange={authorChangeHandler}
           required
         />
       </div>
 
       <div>
-        <label htmlFor="author">Your Name</label>
-        <input
+        <label htmlFor="enteredBody">Text</label>
+        <textarea
           type="text"
-          name="author"
-          id="author"
-          value={enteredAuthor}
-          onChange={authorChangeHandler}
+          name="enteredBody"
+          id="enteredBody"
+          value={enteredBody}
+          onChange={bodyChangeHandler}
+          rows={3}
           required
         />
       </div>
