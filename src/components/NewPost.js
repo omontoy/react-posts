@@ -13,14 +13,14 @@ const NewPost = ({ onAddPost, onCancel }) => {
     setEnteredAuthor(e.target.value);
   };
 
+  const newPostData = {
+    id: Math.random().toString(),
+    author: enteredAuthor,
+    body: enteredBody,
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-
-    const newPostData = {
-      id: Math.random().toString(),
-      author: enteredAuthor,
-      body: enteredBody,
-    };
 
     onAddPost(newPostData);
     onCancel();
