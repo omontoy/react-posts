@@ -6,6 +6,7 @@ import classes from "./Posts.module.css";
 
 const Posts = ({ isPosting, onStopPosting }) => {
   const [posts, setPosts] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   const addPostHandler = (newPost) => {
     fetch(
@@ -24,6 +25,7 @@ const Posts = ({ isPosting, onStopPosting }) => {
 
   useEffect(() => {
     const getPosts = async () => {
+      setIsFetching(true);
       const response = await fetch(
         "https://react-hooks-review-b7200-default-rtdb.firebaseio.com/posts.json",
         {
@@ -35,7 +37,7 @@ const Posts = ({ isPosting, onStopPosting }) => {
       );
 
       const data = await response.json();
-      console.log(data);
+
       let loadedPosts = [];
       for (const key in data) {
         const post = data[key];
@@ -47,6 +49,7 @@ const Posts = ({ isPosting, onStopPosting }) => {
       }
 
       setPosts(loadedPosts);
+      setIsFetching(false);
     };
 
     getPosts();
@@ -59,17 +62,22 @@ const Posts = ({ isPosting, onStopPosting }) => {
           <NewPost onAddPost={addPostHandler} onCancel={onStopPosting} />
         </Modal>
       )}
-      {posts.length > 0 && (
+      {!isFetching && posts.length > 0 && (
         <ul className={classes.posts}>
           {posts.map((post) => (
             <Post key={post.id} author={post.author} body={post.body} />
           ))}
         </ul>
       )}
-      {posts.length === 0 && (
+      {!isFetching && posts.length === 0 && (
         <div style={{ textAlign: "center", color: "white" }}>
           <h2>There are no posts yet</h2>
           <p>Start adding some!</p>
+        </div>
+      )}
+      {isFetching && (
+        <div style={{ textAlign: "center" }}>
+          <h2>Loading Posts ...</h2>
         </div>
       )}
     </>
